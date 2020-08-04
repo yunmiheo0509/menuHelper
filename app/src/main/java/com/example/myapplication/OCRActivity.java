@@ -15,7 +15,7 @@ public class OCRActivity extends AppCompatActivity {
 
         ImageView image = (ImageView) findViewById(R.id.image);
         Bundle extras = getIntent().getExtras();
-        byte[] byteArray = getIntent().getByteArrayExtra("image");
+        byte[] byteArray = getIntent().getByteArrayExtra("img");
         Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         image.setImageBitmap(bitmap);
     }
