@@ -38,17 +38,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //카메라 호출
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
                 //이미지 잘라내기 위한 크기
-                intent.putExtra("crop", "true");
-                intent.putExtra("aspectX", 0);
-                intent.putExtra("aspectY", 0);
-                intent.putExtra("outputX", 200);
-                intent.putExtra("outputY", 150);
+//                intent.putExtra("crop", "true");
+//                intent.putExtra("aspectX", 0);
+//                intent.putExtra("aspectY", 0);
+//                intent.putExtra("outputX", 200);
+//                intent.putExtra("outputY", 150);
 
                 try {
-                    intent.putExtra("return-data", true);
-                    startActivityForResult(intent, PICK_FROM_CAMERA); // Error!! -> manifest파일에 CAMERA권한 없애면 카메라 실행은 됨
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        startActivityForResult(intent,PICK_FROM_CAMERA);
+                    }
+//                    intent.putExtra("return-data", true);
+//                    startActivityForResult(intent, PICK_FROM_CAMERA); // Error!! -> manifest파일에 CAMERA권한 없애면 카메라 실행은 됨
                 } catch (ActivityNotFoundException e) {
                     System.out.println("예외발생!!");
                 }
@@ -83,33 +86,36 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_FROM_CAMERA) {
-            Bundle extras = data.getExtras();
+//            Bundle extras = data.getExtras();
             if (resultCode == RESULT_OK) {
-                Bitmap bitmap = extras.getParcelable("data");
-                Intent intent = new Intent(MainActivity.this, OCRActivity.class);
-
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                float scale = (float) (1024 / (float) bitmap.getWidth());
-                int image_w = (int) (bitmap.getWidth() * scale);
-                int image_h = (int) (bitmap.getHeight() * scale);
-                Bitmap resize = Bitmap.createScaledBitmap(bitmap, image_w, image_h, true);
-                resize.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-                intent.putExtra("image", byteArray);
-                startActivity(intent);
-
-//                byte[] byteArray = stream.toByteArray();
-////                Intent intent = new Intent(MainActivity.this, OCRActivity.class);
-////                intent.putExtra("data", photo);
-////                startActivity(intent);
-//                imgview.setImageBitmap(photo);
+                try {
+                    Bundle extras = data.getExtras();
+                    Bitmap bitmap = (Bitmap) extras.get("data");
+//
+//                    InputStream in = getContentResolver().openInputStream(data.getData());
+//                    Bitmap bitmap = BitmapFactory.decodeStream(in);
+//                    in.close();
+                    Intent intent = new Intent(MainActivity.this, OCRActivity.class);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//                    float scale = (float) (1024 / (float) bitmap.getWidth());
+//                    int image_w = (int) (bitmap.getWidth() * scale);
+//                    int image_h = (int) (bitmap.getHeight() * scale);
+//                    Bitmap resize = Bitmap.createScaledBitmap(bitmap, image_w, image_h, true);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+                    intent.putExtra("img", byteArray);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 
+
+
         //JPEG 이미지는 안되는 상태
         if (requestCode == PICK_FROM_GALLERY) {
-            Bundle extras2 = data.getExtras();
-            System.out.println(extras2);
+
 //            if (extras2 != null) {
             if (resultCode == RESULT_OK) {
 //                System.out.println("extras2 낫 널 실행중");
