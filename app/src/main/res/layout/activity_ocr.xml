@@ -7,5 +7,15 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_centerHorizontal="true"/>
+    <Button
+        android:id="@+id/ocrBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CHANGE"
+        android:textSize="18dp" />
+    <TextView
+        android:id="@+id/ocrText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
