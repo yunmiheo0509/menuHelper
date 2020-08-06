@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 //                intent.putExtra("outputX", 200);
 //                intent.putExtra("outputY", 150);
 
+
                 try {
                     if (intent.resolveActivity(getPackageManager()) != null) {
                         startActivityForResult(intent,PICK_FROM_CAMERA);
