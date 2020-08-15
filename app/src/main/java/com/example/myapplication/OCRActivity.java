@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,7 +8,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,6 +24,8 @@ public class OCRActivity extends AppCompatActivity {
     Bitmap ocrimage;
     private TessBaseAPI mTess;
     String datapath = "";
+    String[] menuArray;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,11 +93,24 @@ public class OCRActivity extends AppCompatActivity {
     }
 
     public void processImage(View view){
-        String OCRresult = null;
+        String ocrResult = null;
         mTess.setImage(ocrimage);
-        OCRresult = mTess.getUTF8Text();
-        TextView OCRTextView = (TextView) findViewById(R.id.ocrText);
+        ocrResult = mTess.getUTF8Text();
+//        TextView OCRTextView = (TextView) findViewById(R.id.ocrText);
 
-        OCRTextView.setText(OCRresult);
+        //한글만 추출한 후 공백으로 구분해 배열에 저장
+        String ocrResult2 = ocrResult.replaceAll("[/[a-z0-9]|[ \\[\\]{}()<>?|`~!@#$%^&*-_+=,.;:\\\"'\\\\]/g]", "");
+        menuArray = ocrResult2.split(" ");
+
+        for (int i = 0; i < menuArray.length; i++) {
+            System.out.println(menuArray[i]);
+        }
+
+        Intent intent = new Intent(OCRActivity.this, MenuListActivity.class);
+
+        intent.putExtra("menuarray", menuArray);
+        startActivity(intent);
+
+//        OCRTextView.setText(ocrResult);
     }
 }
