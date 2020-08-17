@@ -101,6 +101,7 @@ public class OCRActivity extends AppCompatActivity {
         //한글만 추출한 후 공백으로 구분해 배열에 저장
 //        String ocrResult2 = ocrResult.replaceAll("[/[a-z0-9]|[ \\[\\]{}()<>?|`~!@#$%^&*-_+=,.;:\\\"'\\\\]/g]", "");
         String ocrResult2 = ocrResult.replaceAll("^[가-힣\\s]*$", "");
+        ocrResult2=ocrResult2.replaceAll("[0-9]", "");
 
         menuArray = ocrResult2.split(" ");
 
