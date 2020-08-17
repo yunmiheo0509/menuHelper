@@ -99,7 +99,9 @@ public class OCRActivity extends AppCompatActivity {
 //        TextView OCRTextView = (TextView) findViewById(R.id.ocrText);
 
         //한글만 추출한 후 공백으로 구분해 배열에 저장
-        String ocrResult2 = ocrResult.replaceAll("[/[a-z0-9]|[ \\[\\]{}()<>?|`~!@#$%^&*-_+=,.;:\\\"'\\\\]/g]", "");
+//        String ocrResult2 = ocrResult.replaceAll("[/[a-z0-9]|[ \\[\\]{}()<>?|`~!@#$%^&*-_+=,.;:\\\"'\\\\]/g]", "");
+        String ocrResult2 = ocrResult.replaceAll("^[가-힣\\s]*$", "");
+
         menuArray = ocrResult2.split(" ");
 
         for (int i = 0; i < menuArray.length; i++) {

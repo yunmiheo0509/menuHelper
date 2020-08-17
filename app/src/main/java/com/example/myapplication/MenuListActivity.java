@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,77 +18,98 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MenuListActivity extends AppCompatActivity {
-    private ArrayList<MenuListData> menuListData;
-    private RecyclerAdapter recyclerAdapter;
-    private int count = -1;
-
-    TextView textView;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_list);
-
-        Intent intent = getIntent();
-        String[] myStrings = intent.getStringArrayExtra("menuarray");
-        textView = findViewById(R.id.tv_menuname);
-
-        String add_array = "";
-        for (int i = 0; i < myStrings.length; i++) {
-            add_array += myStrings[i] + ",";
-//            menuListData.add(new MenuListData(array[i]));
-        }
-        System.out.println(myStrings);
-
-        RecyclerView recyclerView = findViewById(R.id.rv_menulist);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        menuListData = new ArrayList<>();
-
-        recyclerAdapter = new RecyclerAdapter(menuListData);
-        recyclerView.setAdapter(recyclerAdapter);
-
-//        recyclerAdapter.notifyDataSetChanged();
-//        textView.setText(add_array);
-
-
+//    private List<MenuListData> menuListData;
+//    private RecyclerAdapter recyclerAdapter;
+//    private int count = -1;
+//
+//    TextView textView;
+//
 //    @Override
-//    public void onCreate(Bundle savedInstanceState) {
+//    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_menu_list);
 //
-//        ListView listView = findViewById(R.id.lv_menulist);
-//
-//        final ArrayList<String> list = new ArrayList<>();
-//
 //        Intent intent = getIntent();
 //        String[] myStrings = intent.getStringArrayExtra("menuarray");
+//        textView = findViewById(R.id.tv_menuname);
 //
+//        //전달 테스트
+////        for (int i = 0; i < myStrings.length; i++) {
+////            System.out.println(myStrings[i]);
+////        }
+//
+//        menuListData = new ArrayList<>();
+////        String add_array = "";
+////        for (int i = 0; i < myStrings.length; i++) {
+//////            add_array += myStrings[i] + ",";
+////            System.out.println(myStrings[i]);
+////            menuListData.add(new MenuListData(myStrings[i]));
+////        }
+////        System.out.println(myStrings);
+//
+//        RecyclerView recyclerView = findViewById(R.id.rv_menulist);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+//        recyclerView.setLayoutManager(linearLayoutManager);
+//
+//        menuListData.add(new MenuListData(myStrings[0]));
+//        menuListData.add(new MenuListData(myStrings[1]));
+//        menuListData.add(new MenuListData(myStrings[2]));
+//
+//        recyclerAdapter = new RecyclerAdapter(this, menuListData);
+//        recyclerView.setAdapter(recyclerAdapter);
+//
+////        recyclerView.addItemDecoration(
+////                new DividerItemDecoration(this, linearLayoutManager.getOrientation()));
+////        recyclerView.setLayoutManager(linearLayoutManager);
+//
+////        recyclerAdapter.notifyDataSetChanged();
+////        textView.setText(add_array);
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_menu_list);
+
+        ListView listView = findViewById(R.id.lv_menulist);
+
+        List<String> data = new ArrayList<>();
+
+        Intent intent = getIntent();
+        String[] myStrings = intent.getStringArrayExtra("menuarray");
+
 //        String add_array = "";
 //        for (int i = 0; i < myStrings.length; i++) {
-//            add_array += myStrings[i] + ",";
-////            menuListData.add(new MenuListData(array[i]));
+////            menuListData.add(new MenuListData(myStrings[i]));
 //        }
-//
+
 //        for (int i = 0; i < myStrings.length; i++) {
+////            menuListData.add(new MenuListData(myStrings[i]));
 //            list.add(myStrings[i]);
-//            System.out.println(list.get(i));
+////            System.out.println(list.get(i));
 //        }
-//
-//        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-//                this, android.R.layout.simple_list_item_1, list
-//        );
-//
-//        listView.setAdapter(adapter);
-//
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(MenuListActivity.this, "Click!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                getApplicationContext(), android.R.layout.simple_list_item_1, data
+        );
+
+        listView.setAdapter(arrayAdapter);
+
+        for (int i = 0; i < myStrings.length; i++) {
+            String add = myStrings[i];
+            data.add(add);
+        }
+
+        arrayAdapter.notifyDataSetChanged();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MenuListActivity.this, MenuDescription.class);
+                startActivity(intent);
+            }
+        });
     }
 }

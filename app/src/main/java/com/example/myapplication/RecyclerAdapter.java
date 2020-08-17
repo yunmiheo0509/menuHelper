@@ -10,19 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder> {
     Context context;
     ArrayList<MenuListData> menuListData;
 
-//    public RecyclerAdapter(Context context, ArrayList<MenuListData> menuListData) {
-//        this.context = context;
-//        this.menuListData = menuListData;
-//    }
-
-    public RecyclerAdapter(ArrayList<MenuListData> menuListData) {
+    public RecyclerAdapter(Context context, ArrayList<MenuListData> menuListData) {
+        this.context = context;
         this.menuListData = menuListData;
     }
+
+//    public RecyclerAdapter(ArrayList<MenuListData> menuListData) {
+//        this.menuListData = menuListData;
+//    }
 
     @NonNull
     @Override
@@ -42,14 +43,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
 
     @Override
     public int getItemCount() {
-        return 0;
+        return menuListData.size();
     }
 
-    void addItem(MenuListData menuListData) {
-    }
+//    void addItem(MenuListData menuListData) {
+//    }
 
 
-    class ItemViewHolder extends RecyclerView.ViewHolder{
+    class ItemViewHolder extends RecyclerView.ViewHolder {
         private TextView menuName;
 
         ItemViewHolder(View view) {
@@ -58,9 +59,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
             menuName = view.findViewById(R.id.tv_menuname);
         }
 
-        void onBind(MenuListData menuListData) {
-            menuName.setText(menuListData.getMenuName());
-        }
+//        void onBind(MenuListData menuListData) {
+//            menuName.setText(menuListData.getMenuName());
+//    }
 
     }
 }
